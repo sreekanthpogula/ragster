@@ -145,7 +145,7 @@ llm = ChatOpenAI(model  = 'gpt-4o-mini' ,temperature = 0.9, openai_api_key = ope
 embeddings = OpenAIEmbeddings()
 
 #Defining the vector store
-vector_store = Chroma(persist_directory="chroma_db_legal_bot_part1", embedding_function=embeddings)
+vector_store = Chroma(persist_directory="database", embedding_function=embeddings)
 
 #Creating the instance of the class Ragster
 law = Ragster(llm, embeddings, vector_store)
