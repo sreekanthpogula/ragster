@@ -39,6 +39,11 @@ Ragster currently supports the following laws, with plans to expand internationa
 
 ## 💻 **Developer Quick Start Guide**
 
+## Architecture Overview
+
+
+
+
 Ready to get started? Follow these simple steps to set up **Ragster** on your machine:
 
 1. **Clone the Repository** 🌀
