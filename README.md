@@ -1,13 +1,11 @@
 # ⚖️ **Ragster: AI-Powered Legal Assistant**
 
-[![GitHub stars](https://img.shields.io/github/stars/Ragster/Ragster?style=social)](https://github.com/Ragster/Ragster/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/Ragster/Ragster?style=social)](https://github.com/Ragster/Ragster/forks)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-yellow.svg)](https://opensource.org/license/apache-2-0)a
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1yrS2Kp-kprYWot_sEu7JeWMIRAei_vov?usp=sharing)
-[![Loom](https://img.shields.io/badge/Loom-Tutorial-8A2BE2?logo=loom)](https://www.loom.com/share/dcc6b14c653c4618829f46a9aa2ab68c?sid=00d0d3c1-9d4b-4cf7-8684-cdee76718bd5)
+[![GitHub Stars](https://img.shields.io/github/stars/sreekanthpogula/ragster?style=social)](https://github.com/sreekanthpogula/ragster)
+[![GitHub Forks](https://img.shields.io/github/forks/sreekanthpogula/ragster?style=social)](https://github.com/sreekanthpogula/ragster/forks)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-yellow.svg)](https://opensource.org/license/apache-2-0)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![LangChain](https://img.shields.io/badge/LangChain-Open%20Source-5e9cff?logo=langchain&logoColor=white)](https://python.langchain.com/docs/introduction/)
-[![Crew AI](https://img.shields.io/badge/Crew%20AI-Multi--Agent%20Workflows-00bda?style=flat-square)](https://www.crewai.com/) 
+[![Crew AI](https://img.shields.io/badge/Crew%20AI-Multi--Agent%20Workflows-00bdaa?style=flat-square)](https://www.crewai.com/)
 
 ### *Bridging the Gap Between People and Legal Access*  🌍
 
