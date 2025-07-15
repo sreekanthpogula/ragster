@@ -1,4 +1,5 @@
 # ⚖️ **Ragster: AI-Powered Legal Assistant**
+![Ragster Logo](assets/Ragster_logo.png)
 
 [![GitHub Stars](https://img.shields.io/github/stars/sreekanthpogula/ragster?style=social)](https://github.com/sreekanthpogula/ragster)
 [![GitHub Forks](https://img.shields.io/github/forks/sreekanthpogula/ragster?style=social)](https://github.com/sreekanthpogula/ragster/forks)
@@ -6,6 +7,7 @@
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![LangChain](https://img.shields.io/badge/LangChain-Open%20Source-5e9cff?logo=langchain&logoColor=white)](https://python.langchain.com/docs/introduction/)
 [![Crew AI](https://img.shields.io/badge/Crew%20AI-Multi--Agent%20Workflows-00bdaa?style=flat-square)](https://www.crewai.com/)
+![GitHub Issues](https://img.shields.io/github/issues/sreekanthpogula/ragster)
 
 ### *Bridging the Gap Between People and Legal Access*  🌍
 
@@ -37,10 +39,107 @@ Ragster currently supports the following laws, with plans to expand internationa
 
 ## 💻 **Developer Quick Start Guide**
 
-## Architecture Overview
+## Ragster Initial Architecture Overview
+```
+ragster/
+├── config/                  # Configuration directory
+│   ├── __init__.py
+│   ├── model_config.yaml    # Model-specific configurations
+│   ├── prompt_templates.yaml # Prompt templates
+│   └── logging_config.yaml  # Logging settings
+│
+├── assets/                   # Requirements directory
+│   ├── Ragster_logo.png      # Logo asset
+│   ├── favicon.ico          # Favicon for web app
+|
+|--database/                # Database directory
+│   ├──chroma.sqlite3       # ChromaDB database file
+│
+├── src/                     # Source code
+│   ├── llm/                # LLM clients
+│   │   ├── base.py         # Base LLM client
+│   │   ├── claude_client.py # Anthropic Claude client
+│   │   ├── gpt_client.py   # OpenAI GPT client
+│   │   └── utils.py        # Shared utilities
+│   │
+│   ├── prompt_engineering/ # Prompt engineering tools
+│   │   ├── templates.py    # Template management
+│   │   ├── few_shot.py    # Few-shot prompt utilities
+│   │   └── chain.py       # Prompt chaining logic
+│   │
+│   ├── utils/             # Utility functions
+│   │   ├── rate_limiter.py # API rate limiting
+│   │   ├── token_counter.py # Token counting
+│   │   ├── cache.py       # Response caching
+│   │   └── logger.py      # Logging utilities
+│   │
+│   └── handlers/          # Error handling
+│       └── error_handler.py
+│
+├── data/                   # Data directory
+│   ├── cache/             # Cache storage
+│   ├── prompts/           # Prompt storage
+│   ├── outputs/           # Output storage
+│   └── embeddings/        # Embedding storage
+│
+├── examples/              # Example implementations
+│   ├── basic_completion.py
+│   ├── chat_session.py
+│   └── chain_prompts.py
+│
+├── docs/                  # Documentation
+│   ├── architecture.md     # Architecture overview
+│   ├── usage.md            # Usage guide
+│   ├── api.md              # API documentation
+│   └── contributing.md      # Contribution guidelines
+│
+├── notebooks/              # Jupyter notebooks
+│   ├── data_preprocessing.ipynb
+│   ├── llm_integration.ipynb
+│   ├── prompt_testing.ipynb
+│   ├── response_analysis.ipynb
+│   └── model_experimentation.ipynb
+│
+├── tests/                  # Unit tests
+│   ├── __init__.py
+│   ├── test_llm.py         # LLM client tests
+│   ├── test_prompt_engineering.py # Prompt engineering tests
+│   ├── test_utils.py       # Utility function tests
+│   └── test_handlers.py    # Error handler tests
+│
+├── app.py                 # Main application entry point
+├── README.md              # Project documentation
+├── requirements.txt       # Python dependencies
+├── .python-version         # Python version specification
+├── .env.example           # Example Environment variables
+├── .gitignore             # Git ignore file
+├── .pre-commit-config.yaml # Pre-commit hooks configuration
+├── .dockerignore          # Docker ignore file
+├── .flake8                # Flake8 configuration for linting
+├── .pylintrc              # Pylint configuration for code quality
+├── .streamlit/            # Streamlit configuration directory
+│   ├── config.toml         # Streamlit configuration file
+│   └── secrets.toml         # Streamlit secrets file
+├── .vscode/               # Visual Studio Code settings
+│   ├── settings.json        # VS Code settings
+│   ├── launch.json          # Debugging configuration
+│   └── tasks.json           # Task runner configuration
+├── .github/               # GitHub workflows and issue templates
+│   ├── workflows/           # GitHub Actions workflows
+│   │   ├── ci.yml            # Continuous Integration workflow
+│   │   └── deploy.yml        # Deployment workflow
+│   └── ISSUE_TEMPLATE/       # Issue templates
+│       ├── bug_report.md     # Bug report template
+│       └── feature_request.md # Feature request template
+│
+├── setup.py               # Setup script for packaging
+├── CONTRIBUTING.md        # Contribution guidelines
+├── CHANGELOG.md           # Change log for version history
+├── Dockerfile             # Dockerfile for containerization    
+└── LICENSE                # License file
+```
 
-
-
+## 🚀 **Getting Started with Ragster**
 
 Ready to get started? Follow these simple steps to set up **Ragster** on your machine:
 
@@ -96,7 +195,6 @@ Ready to get started? Follow these simple steps to set up **Ragster** on your ma
 |--------------------|-----------------------------------------------|
 | **LangChain**       | Framework for building language models       |
 | **ChromaDB**        | Vector database for RAG implementation       |
-| **Django**          | High-level Python web framework for robust apps|
 | **OpenAI API**      | Powering natural language understanding      |
 
 ---
