@@ -1,5 +1,5 @@
 # ⚖️ **Ragster: AI-Powered Legal Assistant**
-![Ragster Logo](assets/Ragster_logo.png)
+![ragster_logo.png](assets/Ragster_logo.png)
 
 [![GitHub Stars](https://img.shields.io/github/stars/sreekanthpogula/ragster?style=social)](https://github.com/sreekanthpogula/ragster)
 [![GitHub Forks](https://img.shields.io/github/forks/sreekanthpogula/ragster?style=social)](https://github.com/sreekanthpogula/ragster/forks)
