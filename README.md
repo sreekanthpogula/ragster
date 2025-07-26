@@ -21,6 +21,8 @@
 > 🛡️ **Mission:** “Justice should be accessible to everyone. Ragster ensures that no one is left behind when it comes to legal knowledge.”
 
 This project is developed by [Sreekanth Pogula](https://github.com/sreekanthpogula) 💼
+![alt text](assets/article_output.png)
+![alt text](assets/output.png)
 
 ---
 
