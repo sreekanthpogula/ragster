@@ -5,6 +5,8 @@ import time
 import base64
 from ragster_main import Ragster
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_community.llms import ollama
+from langchain.embeddings import OllamaEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from dotenv import load_dotenv
@@ -110,7 +112,7 @@ if os.path.exists(logo_path):
     st.markdown(f"""
     <div class="st-title">
         <img src="data:image/png;base64,{encoded_image}" alt="Ragster Logo" class="logo">
-        <span>Ragster - An AI Legal Assistant </span>
+        <span>Ragster - An AI Legal Assistant with Indian Penal Code (IPC) Expertise</span>
     </div>
     """, unsafe_allow_html=True)
 else:
@@ -122,8 +124,20 @@ else:
 
 # Sidebar improvements
 st.sidebar.header("About Ragster")
-st.sidebar.markdown("""
-**Ragster** is a free, open-source AI legal assistant that helps answer legal questions.
+
+# Display logo in sidebar
+logo_path = "assets/ragster_logo.png"  # Path to your logo image
+if os.path.exists(logo_path):
+    with open(logo_path, "rb") as image_file:
+        encoded_image = base64.b64encode(image_file.read()).decode()
+    st.sidebar.markdown(f"""
+    <div class="st-title">
+        <img src="data:image/png;base64,{encoded_image}" alt="Ragster Logo" class="logo" style="width: 1000px; height: 500px; margin-bottom: 10px;">
+    </div>
+    """, unsafe_allow_html=True)
+st.sidebar.markdown(
+"""
+**Ragster** is a free, open-source AI legal assistant that helps answer legal questions related to various legal topics in IPC (Indian Penal Code).
 
 Visit our website: [Ragster](https://ragster.streamlit.app/)
 
@@ -139,10 +153,11 @@ thread_id = str(id)
 # Load API key
 openai_api_key = os.getenv('OPENAI_API_KEY')
 #Defining the Language Model
-llm = ChatOpenAI(model  = 'gpt-4o-mini' ,temperature = 0.9, openai_api_key = openai_api_key)
+# llm = ChatOpenAI(model  = 'gpt-4o-mini' ,temperature = 0.9, openai_api_key = openai_api_key)
+llm = ollama.Ollama(model="llama2", temperature=0.2)
 
 #Defining the Embeddings
-embeddings = OpenAIEmbeddings()
+embeddings = OllamaEmbeddings()
 
 #Defining the vector store
 vector_store = Chroma(persist_directory="database", embedding_function=embeddings)
