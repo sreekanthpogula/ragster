@@ -6,7 +6,7 @@ import base64
 from ragster_main import Ragster
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_community.llms import ollama
-from langchain.embeddings import OllamaEmbeddings
+from langchain_community.embeddings import OllamaEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from dotenv import load_dotenv

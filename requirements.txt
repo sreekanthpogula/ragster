@@ -1,5 +1,5 @@
 chroma-hnswlib==0.7.6
-chromadb==0.5.11
+chromadb
 langchain==0.2.9
 langchain-chroma==0.1.4
 langchain-community==0.2.10
