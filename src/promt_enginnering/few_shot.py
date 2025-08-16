@@ -3,6 +3,7 @@ import openai
 # Replace with your OpenAI API key
 openai.api_key = "YOUR_API_KEY"
 
+
 def few_shot_prompting(prompt, examples, model="gpt-3.5-turbo", max_tokens=150):
     """
     Implements few-shot prompting using OpenAI's Chat API.
@@ -28,6 +29,7 @@ def few_shot_prompting(prompt, examples, model="gpt-3.5-turbo", max_tokens=150):
         temperature=0.7,
     )
     return response.choices[0].message["content"].strip()
+
 
 if __name__ == "__main__":
     # Example few-shot examples

@@ -13,3 +13,4 @@ openai
 PyMuPDF==1.24.9
 PyMuPDFb==1.24.9
 streamlit==1.37.0
+deep-translator==1.11.4

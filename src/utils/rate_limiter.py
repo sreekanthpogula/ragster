@@ -1,6 +1,7 @@
 import time
 import threading
 
+
 class RateLimiter:
     """
     Thread-safe rate limiter for controlling the number of requests to an API (e.g., LLM API).
@@ -37,6 +38,7 @@ class RateLimiter:
                     self.tokens -= 1
                     return
             time.sleep(0.01)
+
 
 # Example usage:
 # limiter = RateLimiter(max_calls=5, period=1)  # 5 requests per second

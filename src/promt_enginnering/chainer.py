@@ -20,6 +20,7 @@ class Chainer:
 
 # Example usage:
 if __name__ == "__main__":
+
     def step1(x):
         return x + 1
 

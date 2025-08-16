@@ -1,5 +1,6 @@
 # chain_prompts.py
 
+
 def chain_prompts(prompts, initial_input):
     """
     Chains a list of prompt functions together.
@@ -13,15 +14,19 @@ def chain_prompts(prompts, initial_input):
         output = prompt(output)
     return output
 
+
 # Example prompt functions
 def prompt1(text):
     return f"Step 1 processed: {text}"
 
+
 def prompt2(text):
     return f"Step 2 processed: {text}"
 
+
 def prompt3(text):
     return f"Step 3 processed: {text}"
+
 
 if __name__ == "__main__":
     prompts = [prompt1, prompt2, prompt3]

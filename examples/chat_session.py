@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
 
+
 class ChatSession:
     def __init__(self, user_id):
         self.session_id = str(uuid.uuid4())
@@ -9,14 +10,13 @@ class ChatSession:
         self.messages = []
 
     def add_message(self, sender, message):
-        self.messages.append({
-            'timestamp': datetime.utcnow(),
-            'sender': sender,
-            'message': message
-        })
+        self.messages.append(
+            {"timestamp": datetime.utcnow(), "sender": sender, "message": message}
+        )
 
     def get_messages(self):
         return self.messages
+
 
 # Example usage:
 if __name__ == "__main__":

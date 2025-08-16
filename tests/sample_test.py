@@ -5,12 +5,15 @@ from langchain_core.chat_history import BaseChatMessageHistory
 
 # Assuming Ragster is imported from the module where it's defined
 
+
 class TestRagster(unittest.TestCase):
     def setUp(self):
         self.mock_llm = MagicMock()
         self.mock_embeddings = MagicMock()
         self.mock_vector_store = MagicMock()
-        self.ragster = Ragster(self.mock_llm, self.mock_embeddings, self.mock_vector_store)
+        self.ragster = Ragster(
+            self.mock_llm, self.mock_embeddings, self.mock_vector_store
+        )
 
     def test_init_sets_attributes(self):
         self.assertEqual(self.ragster.llm, self.mock_llm)
@@ -23,7 +26,7 @@ class TestRagster(unittest.TestCase):
         retriever = self.ragster._Ragster__retriever()
         self.mock_vector_store.as_retriever.assert_called_once_with(
             search_type="similarity_score_threshold",
-            search_kwargs={"k": 10, "score_threshold": 0.3}
+            search_kwargs={"k": 10, "score_threshold": 0.3},
         )
         self.assertEqual(retriever, mock_retriever)
 
@@ -32,7 +35,11 @@ class TestRagster(unittest.TestCase):
     @patch("langchain.chains.create_retrieval_chain")
     @patch("langchain.prompts.ChatPromptTemplate.from_messages")
     def test_llm_answer_generator_returns_chain(
-        self, mock_from_messages, mock_create_retrieval_chain, mock_create_stuff_documents_chain, mock_create_history_aware_retriever
+        self,
+        mock_from_messages,
+        mock_create_retrieval_chain,
+        mock_create_stuff_documents_chain,
+        mock_create_history_aware_retriever,
     ):
         mock_chain = MagicMock()
         mock_create_retrieval_chain.return_value = mock_chain
@@ -49,7 +56,9 @@ class TestRagster(unittest.TestCase):
 
     @patch.object(Ragster, "llm_answer_generator")
     @patch("langchain_core.runnables.history.RunnableWithMessageHistory")
-    def test_conversational_invokes_chain(self, mock_runnable, mock_llm_answer_generator):
+    def test_conversational_invokes_chain(
+        self, mock_runnable, mock_llm_answer_generator
+    ):
         mock_chain = MagicMock()
         mock_llm_answer_generator.return_value = mock_chain
         mock_runnable_instance = MagicMock()
@@ -58,6 +67,7 @@ class TestRagster(unittest.TestCase):
         result = self.ragster.conversational("What is law?", "sess1")
         mock_runnable_instance.invoke.assert_not_called()  # Should not be called in this test
         mock_llm_answer_generator.assert_called_once_with("What is law?")
+
 
 if __name__ == "__main__":
     unittest.main()

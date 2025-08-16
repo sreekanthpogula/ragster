@@ -1,4 +1,4 @@
-#adding necessary imports
+# adding necessary imports
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
 from langchain.prompts import ChatPromptTemplate
@@ -7,11 +7,14 @@ from langchain_core.prompts import MessagesPlaceholder
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from deep_translator import GoogleTranslator
 
-#This Class delas with working of Chatbot
 
-class Ragster: 
-  """This is the class which deals mainly with a conversational RAG
+# This Class delas with working of Chatbot
+
+
+class Ragster:
+    """This is the class which deals mainly with a conversational RAG
     It takes llm, embeddings and vector store as input to initialise.
 
     create an instance of it using law = Ragster(llm,embeddings,vectorstore)
@@ -25,44 +28,65 @@ class Ragster:
     law.conversational(query1)
     query2 = "Is it applicable in India?"
     law.conversational(query2)
-  """
-  store = {}
+    """
 
-  def __init__(self,llm,embeddings,vector_store):
-    """LLM , embedings and the vector store is the initial vaues neede while creating instance of the class"""
-    self.llm = llm
-    self.embeddings = embeddings
-    self.vector_store = vector_store
+    store = {}
 
-  def __retriever(self):
-    """The function to define the properties of retriever"""
-    retriever = self.vector_store.as_retriever(search_type="similarity_score_threshold",search_kwargs={"k": 10, "score_threshold":0.3})
-    return retriever
-  
-  def llm_answer_generator(self,query):
-    """This function invokoes the functionality of conversational RAG"""
-    llm = self.llm
-    retriever = self.__retriever()
-    contextualize_q_system_prompt = (
-        "Given a chat history and the latest user question "
-        "which might reference context in the chat history, "
-        "formulate a standalone question which can be understood "
-        "without the chat history. Do NOT answer the question, "
-        "just reformulate it if needed and otherwise return it as is."
-    )
+    def __init__(self, llm, embeddings, vector_store):
+        """LLM , embedings and the vector store is the initial vaues neede while creating instance of the class"""
+        self.llm = llm
+        self.embeddings = embeddings
+        self.vector_store = vector_store
+        self.input_language = "auto"   # auto-detect by default
+        self.output_language = "en"    # default English
+    
+    def set_languages(self, input_lang="auto", output_lang="en"):
+        self.input_language = input_lang
+        self.output_language = output_lang
+    
+    def translate_input(self, text):
+        if self.input_language != "en":  
+            return GoogleTranslator(source=self.input_language, target="en").translate(text)
+        elif self.input_language == "auto":
+            return GoogleTranslator(source="auto", target="en").translate(text)
+        return text
 
-    contextualize_q_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", contextualize_q_system_prompt),
-            MessagesPlaceholder("chat_history"),
-            ("human", "{input}"),
-        ]
-    )
-    history_aware_retriever = create_history_aware_retriever(
-        llm, retriever, contextualize_q_prompt
-    )
-    system_prompt = (
-      """ You are Ragster, an advanced legal AI assistant designed to provide precise and contextual legal insights based only on legal queries.
+    def translate_output(self, text):
+        if self.output_language != "en":
+            return GoogleTranslator(source="en", target=self.output_language).translate(text)
+        return text
+
+    def __retriever(self):
+        """The function to define the properties of retriever"""
+        retriever = self.vector_store.as_retriever(
+            search_type="similarity_score_threshold",
+            search_kwargs={"k": 10, "score_threshold": 0.3},
+        )
+        return retriever
+
+    def llm_answer_generator(self, query):
+        """This function invokoes the functionality of conversational RAG"""
+        llm = self.llm
+        retriever = self.__retriever()
+        contextualize_q_system_prompt = (
+            "Given a chat history and the latest user question "
+            "which might reference context in the chat history, "
+            "formulate a standalone question which can be understood "
+            "without the chat history. Do NOT answer the question, "
+            "just reformulate it if needed and otherwise return it as is."
+        )
+
+        contextualize_q_prompt = ChatPromptTemplate.from_messages(
+            [
+                ("system", contextualize_q_system_prompt),
+                MessagesPlaceholder("chat_history"),
+                ("human", "{input}"),
+            ]
+        )
+        history_aware_retriever = create_history_aware_retriever(
+            llm, retriever, contextualize_q_prompt
+        )
+        system_prompt = """ You are Ragster, an advanced legal AI assistant designed to provide precise and contextual legal insights based only on legal queries.
 
       Purpose
         Your purpose is to provide legal assistant and to democratize legal access.
@@ -85,14 +109,13 @@ class Ragster:
 Question : {input}
 
 """
-    
-    )
-    qa_prompt = ChatPromptTemplate.from_messages(
+        qa_prompt = ChatPromptTemplate.from_messages(
             [
                 ("system", system_prompt),
                 MessagesPlaceholder(variable_name="chat_history"),
-                ("human", 
-                """
+                (
+                    "human",
+                    """
              While Answering the question you should use only the given context.
 
               Guidelines for answering:
@@ -144,33 +167,40 @@ Question : {input}
                 If no relevant context exists in the context provided, use a strategic fallback response
                 like the project is in its pilot phase so soon it would be updates with broader laws
 
-                """
+                """,
                 ),
             ]
         )
 
-    question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
-    rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
-    return rag_chain
+        question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
+        rag_chain = create_retrieval_chain(
+            history_aware_retriever, question_answer_chain
+        )
+        return rag_chain
 
-  def get_session_history(self,session_id: str) -> BaseChatMessageHistory:
-    if session_id not in Ragster.store:
-        Ragster.store[session_id] = ChatMessageHistory()
-    return Ragster.store[session_id]
-  
-  def conversational(self,query,session_id):
-    rag_chain = self.llm_answer_generator(query)
-    get_session_history = self.get_session_history
-    conversational_rag_chain = RunnableWithMessageHistory(
-        rag_chain,
-        get_session_history,
-        input_messages_key="input",
-        history_messages_key="chat_history",
-        output_messages_key="answer")
-    response = conversational_rag_chain.invoke(
-        {"input": query},
-        config={
-            "configurable": {"session_id": session_id}
-        },
-    )
-    return(response['answer'])
+    def get_session_history(self, session_id: str) -> BaseChatMessageHistory:
+        if session_id not in Ragster.store:
+            Ragster.store[session_id] = ChatMessageHistory()
+        return Ragster.store[session_id]
+
+    def conversational(self, query, session_id):
+        """This function is used to invoke the llm_answer_generator and get the answer"""
+        # Translate user input into English before processing
+        translated_query = self.translate_input(query)
+        
+        rag_chain = self.llm_answer_generator(translated_query)
+        get_session_history = self.get_session_history
+        conversational_rag_chain = RunnableWithMessageHistory(
+            rag_chain,
+            get_session_history,
+            input_messages_key="input",
+            history_messages_key="chat_history",
+            output_messages_key="answer",
+        )
+        response = conversational_rag_chain.invoke(
+            {"input": translated_query},
+            config={"configurable": {"session_id": session_id}},
+        )
+
+        # Translate LLM output back to target language
+        return self.translate_output(response["answer"])

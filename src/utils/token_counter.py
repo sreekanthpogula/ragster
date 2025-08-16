@@ -16,14 +16,15 @@ class TokenCounter:
     def truncate_input(self, text: str) -> str:
         tokens = text.split()
         if len(tokens) > self.input_token_limit:
-            tokens = tokens[:self.input_token_limit]
-        return ' '.join(tokens)
+            tokens = tokens[: self.input_token_limit]
+        return " ".join(tokens)
 
     def truncate_output(self, text: str) -> str:
         tokens = text.split()
         if len(tokens) > self.output_token_limit:
-            tokens = tokens[:self.output_token_limit]
-        return ' '.join(tokens)
+            tokens = tokens[: self.output_token_limit]
+        return " ".join(tokens)
+
 
 # Example usage:
 # counter = TokenCounter(input_token_limit=512, output_token_limit=128)

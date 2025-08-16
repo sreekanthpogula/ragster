@@ -1,6 +1,7 @@
 import os
 import requests
 
+
 class ClaudeClient:
     def __init__(self, config_path=None):
         self.api_key = self._load_api_key(config_path)
@@ -19,20 +20,18 @@ class ClaudeClient:
         raise ValueError("API key not found in Claude config.")
 
     def complete(self, prompt, model="claude-2", max_tokens=256, temperature=0.7):
-        headers = {
-            "x-api-key": self.api_key,
-            "content-type": "application/json"
-        }
+        headers = {"x-api-key": self.api_key, "content-type": "application/json"}
         payload = {
             "prompt": prompt,
             "model": model,
             "max_tokens_to_sample": max_tokens,
             "temperature": temperature,
-            "stop_sequences": ["\n\nHuman:"]
+            "stop_sequences": ["\n\nHuman:"],
         }
         response = requests.post(self.api_url, json=payload, headers=headers)
         response.raise_for_status()
         return response.json()["completion"]
+
 
 # Example usage:
 # client = ClaudeClient()

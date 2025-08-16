@@ -2,6 +2,7 @@ import functools
 import threading
 import time
 
+
 class SimpleCache:
     def __init__(self, max_size=128, ttl=300):
         self.cache = {}
@@ -39,8 +40,10 @@ class SimpleCache:
         with self.lock:
             self.cache.clear()
 
+
 def cache(ttl=300, max_size=128):
     cache_instance = SimpleCache(max_size=max_size, ttl=ttl)
+
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -51,5 +54,7 @@ def cache(ttl=300, max_size=128):
             result = func(*args, **kwargs)
             cache_instance.set(key, result)
             return result
+
         return wrapper
+
     return decorator
